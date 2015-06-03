@@ -26,27 +26,4 @@ it will not work if you have just created a new column, save it first*
 Tampermonkey can watch what you are doing in the browser and trigger code when you browse to FldEdit.aspx page
 
 * Install the [Tampermonkey plugin](https://tampermonkey.net/) (alas not possible in IE) 
-* and create a script (using your own URL!):
-
-    // ==UserScript==
-    // @name        CalcMaster
-    // @author      Danny Engelman  
-    // @namespace   http://ViewMaster365.com/
-    // @version     0.1
-    // @description Calculated Column Editor
-    // @match       *FldEdit.aspx*
-    // @copyright   2012+, You
-    // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js
-    // @require     https://gist.github.com/raw/2625891/waitForKeyElements.js
-    // @grant       GM_addStyle
-    // ==/UserScript==
-    waitForKeyElements ( '#onetidIODefTextValue1' , function(){
-        //attach bookmarklet code to page and trigger execute
-        var VM365_CalcMasterDirectory='https://365csi.sharepoint.com/sites/VM/SitePages/CalcMaster/';
-
-        var jsCode = document.createElement('script'); 
-        jsCode.setAttribute('src', VM365_CalcMasterDirectory + 'VM365_CalcMaster.js'  );
-        document.body.appendChild(jsCode);
-    } );
-
-
+* Add the [Tampermonkey script](https://github.com/Danny-Engelman/CalcMaster/blob/master/Tampermonkey)  do not forget to change yout URL
