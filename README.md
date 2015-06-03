@@ -1,30 +1,32 @@
-# CalcMaster
-SharePoint Calculated Column Editor by ViewMaster365.com
+# CalcMaster - Calculated Column Editor
 
-**This code only works on existing Calculated Columns, it will not work if you have just created a new column**
-
-##Use
-
-Activated on a SharePoint FldEdit.aspx page this code will attach itself to the Formula textarea.
+Activated on a SharePoint FldEdit.aspx page this code will attach itself to the Formula textarea.  
 On every keyup event it will (try to) save the Formula and provide immediate feedback.
 
 The OK button is no longer needed, because a correct Formula is always saved.
 
+*This code only works on existing Calculated Columns,  
+it will not work if you have just created a new column, save it first*
+
+
 ##Installation
 
 ###Save the Javascript file to your own server
-* Download the VM365_CalcMaster.js script file to a location within your SharePoint/Office365 environment
-* Copy the full URL to this file (e.g: //vm365.sharepoint.com/Site pages/VM365_CalcMaster.js)
+* Download the [VM365_CalcMaster.js](https://raw.githubusercontent.com/Danny-Engelman/CalcMaster/master/VM365_CalcMaster.js) script file to a Library within your SharePoint/Office365 environment
+* Copy the full URL to this file (e.g: //vm365.sharepoint.com/Pages/VM365_CalcMaster.js)
 
 ###Trigger with a Browser Bookmarklet (manual activation)
 * Right click in the Favourites/Bookmark bar to Add a New Page (on IE add the WebPage as Favorite then overwrite the address with the JavaScript below)
-* Name it CalcMaster
+* Name it CalcMaster (or anything you want)
 * fill the URL with javascript code (don't forget to change the URL):
 
     javascript:(function(){var url='YOUR_URL_HERE',jsCode=document.createElement('script');jsCode.setAttribute('src', url);document.body.appendChild(jsCode);}())
     
 ###Trigger with Chrome Tampermonkey (auto activation)
-Install the [https://tampermonkey.net/](Tampermonkey plugin) (alas not possible in IE) and create a script:
+Tampermonkey can watch what you are doing in the browser and trigger code when you browse to FldEdit.aspx page
+
+* Install the [Tampermonkey plugin](https://tampermonkey.net/) (alas not possible in IE) 
+* and create a script (using your own URL!):
 
     // ==UserScript==
     // @name        CalcMaster
