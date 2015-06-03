@@ -17,14 +17,14 @@ The OK button is no longer needed, because a correct Formula is always saved.
 * Copy the full URL to this file (e.g: //vm365.sharepoint.com/Site pages/VM365_CalcMaster.js)
 
 ###Trigger with a Browser Bookmarklet (manual activation)
-* (Chrome Browser) Right click in the Favourites/Bookmark bar to Add a New Page
+* Right click in the Favourites/Bookmark bar to Add a New Page (on IE add the WebPage as Favorite then overwrite the address with the JavaScript below)
 * Name it CalcMaster
 * fill the URL with javascript code (don't forget to change the URL):
 
     javascript:(function(){var url='YOUR_URL_HERE',jsCode=document.createElement('script');jsCode.setAttribute('src', url);document.body.appendChild(jsCode);}())
     
 ###Trigger with Chrome Tampermonkey (auto activation)
-Install the Chrome Tampermonkey plugin and create a script:
+Install the [https://tampermonkey.net/](Tampermonkey plugin) (alas not possible in IE) and create a script:
 
     // ==UserScript==
     // @name        CalcMaster
