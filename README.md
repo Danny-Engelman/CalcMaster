@@ -8,6 +8,8 @@ The OK button is no longer needed, because a correct Formula is always saved.
 *This code only works on existing Calculated Columns,  
 it will not work if you have just created a new column, save it first*
 
+###Version History
+june 3 2015 - extracted primary code from my personal advanced Calcmaster
 
 ##Installation
 
