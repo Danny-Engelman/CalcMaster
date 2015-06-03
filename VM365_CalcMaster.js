@@ -8,27 +8,26 @@ var VM365_CalcMaster = {
 	textareaHeight: '300px',
 	//initialize CalcMaster
 	initialize: function () {
-		var CM=VM365_CalcMaster;//pointer to global
-		CM.columnList = document.getElementById('onetidIOCalcFields1'); //get references to DOM elements
-		CM.textarea = document.getElementById('onetidIODefTextValue1');
+		VM365_CalcMaster.columnList = document.getElementById('onetidIOCalcFields1'); //get references to DOM elements
+		VM365_CalcMaster.textarea = document.getElementById('onetidIODefTextValue1');
 		//adjust layout of textarea and column list
-		CM.columnList.style.height =
-		CM.textarea.style.height = CM.textareaHeight;
-		CM.textarea.style.width = CM.textareaWidth;
+		VM365_CalcMaster.columnList.style.height =
+		VM365_CalcMaster.textarea.style.height = VM365_CalcMaster.textareaHeight;
+		VM365_CalcMaster.textarea.style.width = VM365_CalcMaster.textareaWidth;
 		//Highlight the Number datatype for HTML output
 		document.getElementById('L_onetidTypeNumber1').innerHTML = 'Number (outputs HTML/JavaScript)';
 		document.getElementById('L_onetidTypeNumber1').parentNode.style.backgroundColor = 'lightGreen';
 		//add CalcMaster UI elements for Toolbar and Reporting
 		document.getElementById('onetidIODefText0').innerHTML = "<div style='min-height:45px;'><div id='calcmasterSave'></div><div id='calcmasterHint'></div><div id='calcmasterButtons'></div></div>";
 		//create CalcMaster toolbar HTML
-		var H = "<img src='/" + CM.layouts + '/images/WSC16.GIF';
+		var H = "<img src='/" + VM365_CalcMaster.layouts + "/images/WSC16.GIF' ";
 			H += " alt='Wrap Javascript code in SharePoint Formula quoted string' ";
-			H += "' onclick='CM.functionConvertToICC()'>";
-		CM.setDOMelement(H, 0, 'calcmasterButtons');
+			H += " onclick='VM365_CalcMaster.functionConvertToICC()'>Convert JS";
+		VM365_CalcMaster.setDOMelement(H, 0, 'calcmasterButtons');
 		//add event to the existing textarea
-		CM.textarea.onkeyup = function (event) {
+		VM365_CalcMaster.textarea.onkeyup = function (event) {
 			if ([37, 38, 39, 40].indexOf(event.keyCode) === -1) { //ignore arrow keys
-				CM.updateFormula(event);
+				VM365_CalcMaster.updateFormula(event);
 			}
 		};
 	},
@@ -39,15 +38,13 @@ var VM365_CalcMaster = {
 		savestate.style.color = ['black', 'red', 'green', 'darkorange'][error];
 	},
 	setFormulaInTextarea: function (Formula) {
-		var CM=VM365_CalcMaster;//pointer to global
 		if (Formula.indexOf('\n') === -1) {
 			Formula = Formula.replace(/&\"/gi, '\n  &\"'); //replace & before quote
 			Formula = Formula.replace(/\"&/gi, '"\n  &'); //replace & after quote
 			Formula = Formula.replace(/\";/gi, '\"\n;'); //replace & before quote
 		}
-		CM.textarea.value = Formula;
+		VM365_CalcMaster.textarea.value = Formula;
 	},
-	
 	sanitizeFormulaBeforeWritingToSP: function (Formula) {
 		//F=F.replace(/'/g, "&#39;");
 		//Formula = Formula.replace(/'/g, "\\'");
@@ -57,8 +54,7 @@ var VM365_CalcMaster = {
 	},
 	//addtional button functions while editting
 	functionConvertToICC: function (Formula) {
-		var CM=VM365_CalcMaster;//pointer to global
-		Formula = Formula || CM.textarea.value;
+		Formula = Formula || VM365_CalcMaster.textarea.value;
 		if (Formula[0] !== '=') {//if Formula is NOT a SharePoint formula
 			//it is javascript code
 			Formula.replace(/'/g, '`');
@@ -66,19 +62,18 @@ var VM365_CalcMaster = {
 				//wrap in IMG onload tag
 				Formula = '="<img src=/_layouts/images/blank.gif onload=""{"&"' + Formula.replace(/\n/g, '"\n&"') + '"&"}"">"';
 			}
-			CM.setFormulaInTextarea(Formula);
+			VM365_CalcMaster.setFormulaInTextarea(Formula);
 		}
 	},
 	updateFormula: function (event) {
-		var CM=VM365_CalcMaster;//pointer to global
 		//current selected Formula output datatype
 		var selectedType = Array.prototype.filter.call(document.getElementsByName('ResultType'), function (r) {
 			if (r.checked) return (r);
 		});
 		document.getElementById('onetidSaveItem').style.display = 'none'; //hide OK button 
-		var Formula = CM.textarea.value;
-		CM.setFormulaInTextarea(Formula);
-		CM.updateCalculatedColumn({
+		var Formula = VM365_CalcMaster.textarea.value;
+		VM365_CalcMaster.setFormulaInTextarea(Formula);
+		VM365_CalcMaster.updateCalculatedColumn({
 			Title: document.getElementById('idColName').value,
 			Description: document.getElementById('idDesc').value,
 			Formula: Formula,
@@ -89,20 +84,19 @@ var VM365_CalcMaster = {
 		if (Formula.split('"').length % 2 === 0) calcmasterHint.push("unmatched double quotes");
 		if (Formula.split("'").length % 2 === 0) calcmasterHint.push("unmatched single quotes");
 		if (Formula.split('(').length !== Formula.split(')').length) calcmasterHint.push("unmatched () brackets");
-		CM.setDOMelement(calcmasterHint.join('<br>'), 3, 'calcmasterHint');
+		VM365_CalcMaster.setDOMelement(calcmasterHint.join('<br>'), 3, 'calcmasterHint');
 	},
 	updateCalculatedColumn: function (column) {
-		var CM=VM365_CalcMaster;//pointer to global
-		CM.setDOMelement('Formula: updating...', 2);
+		VM365_CalcMaster.setDOMelement('Formula: updating...', 2);
 		column.list = "Lists(guid'"   + _spPageContextInfo.pageListId.replace(/[{}]/g, '') +   "')";
 		column.field = "Fields/getbytitle('" + column.Title + "')";
 		var REST = {
 			url: _spPageContextInfo.webAbsoluteUrl + "/_api/Web/" + column.list + "/" + column.field,
 			success: function (data) {
-				CM.setDOMelement('Formula: saved', 0);
+				VM365_CalcMaster.setDOMelement('Formula: saved', 0);
 			},
 			error: function (data) {
-				CM.setDOMelement(data.responseJSON.error.message.value, 1);
+				VM365_CalcMaster.setDOMelement(data.responseJSON.error.message.value, 1);
 			},
 			type: "POST",
 			headers: {
@@ -113,7 +107,7 @@ var VM365_CalcMaster = {
 			},
 			data: JSON.stringify({
 				'Title': column.Title,
-				'Formula': CM.sanitizeFormulaBeforeWritingToSP(column.Formula),
+				'Formula': VM365_CalcMaster.sanitizeFormulaBeforeWritingToSP(column.Formula),
 				'__metadata': {
 					'type': 'SP.FieldCalculated'
 				},
