@@ -47,6 +47,7 @@ var VM365_CalcMaster = {
 		}
 		CM.textarea.value = Formula;
 	},
+	
 	sanitizeFormulaBeforeWritingToSP: function (Formula) {
 		//F=F.replace(/'/g, "&#39;");
 		//Formula = Formula.replace(/'/g, "\\'");
