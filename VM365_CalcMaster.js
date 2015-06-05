@@ -1,11 +1,11 @@
 /*global _spPageContextInfo */
-/*global document,console,clearTimeout,setTimeout,$ */
+/*global document,console,clearTimeout,setTimeout,window,XMLHttpRequest,$ */
 /*jshint -W043*/
 var VM365_CalcMaster = { //global obect for easier debugging
 	//global settings
 	comma: _spPageContextInfo.currentLanguage === 1033 ? ',' : ';', //SharePoint function separator
 	layouts: _spPageContextInfo.layoutsUrl,
-	saveID:0,
+	saveID: 0,
 	//initialize CalcMaster
 	initialize: function () {
 		//get references to DOM elements
@@ -32,14 +32,14 @@ var VM365_CalcMaster = { //global obect for easier debugging
 					onclick='VM365_CalcMaster.functionConvertToICC()'> \
 				<div id='calcmasterSave'></div><div id='calcmasterHint'></div> \
 			</div>", 0, 'onetidIODefText0');
-		VM365_CalcMaster.setDOMelement('Update your Formula and I will check if the Formula is correct',2);
+		VM365_CalcMaster.setDOMelement('Update your Formula and I will check if the Formula is correct', 2);
 		//add event to the existing textarea
 		VM365_CalcMaster.textarea.onkeyup = function (event) {
 			if ([37, 38, 39, 40].indexOf(event.keyCode) === -1) { //ignore arrow keys
-				clearTimeout( VM365_CalcMaster.saveID );
-				VM365_CalcMaster.saveID=setTimeout(function(){
-								VM365_CalcMaster.updateFormula(event);
-					},500);
+				clearTimeout(VM365_CalcMaster.saveID);
+				VM365_CalcMaster.saveID = setTimeout(function () {
+					VM365_CalcMaster.updateFormula(event);
+				}, 300);//do not save while typing
 			}
 		};
 	},
@@ -99,7 +99,47 @@ var VM365_CalcMaster = { //global obect for easier debugging
 		if (Formula.split('(').length !== Formula.split(')').length) calcmasterHint.push("unmatched () brackets");
 		VM365_CalcMaster.setDOMelement(calcmasterHint.join('<br>'), 3, 'calcmasterHint');
 	},
-	updateCalculatedColumn: function (column) {
+	updateCalculatedColumn: function (column,formula,list,field) {
+		VM365_CalcMaster.setDOMelement('Updating Formula ' + column.Title + '...', 2);
+		column.list = "Lists(guid'" + _spPageContextInfo.pageListId.replace(/[{}]/g, '') + "')";
+		column.field = "Fields/getbytitle('" + column.Title + "')";
+		console.info('saving',column.Title,column.Formula);
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+				//console.info(xmlhttp.status, xmlhttp.statusText,JSON.parse(xmlhttp.responseText).error.message.value);
+				if (xmlhttp.status == 500) {
+					VM365_CalcMaster.setDOMelement(JSON.parse(xmlhttp.responseText).error.message.value, 1);
+				} else {
+					VM365_CalcMaster.setDOMelement('Formula ' + column.Title + ' saved succesfully');
+				}
+			}
+		};
+		xmlhttp.open("POST", _spPageContextInfo.webAbsoluteUrl + "/_api/Web/ " + column.list + "/" + column.field, true);
+		xmlhttp.setRequestHeader("X-HTTP-Method", "MERGE");
+		xmlhttp.setRequestHeader("X-RequestDigest", document.getElementById('__REQUESTDIGEST').value);
+		xmlhttp.setRequestHeader("accept", "application/json;odata=verbose");
+		xmlhttp.setRequestHeader("content-type", "application/json;odata=verbose");
+		xmlhttp.send(
+			JSON.stringify({
+				'Title': column.Title,
+				'Formula': VM365_CalcMaster.sanitizeFormulaBeforeWritingToSP(column.Formula),
+				'__metadata': {
+					'type': 'SP.FieldCalculated'
+				},
+				'Description': column.Description,
+				'OutputType': ({
+					Text: 2,
+					Number: 9,
+					Currency: 10,
+					DateTime: 4,
+					Boolean: 8
+				})[column.type]
+			})
+		);
+	},
+	//leaving jQuery ajax call in here, I use it my CalcMaster Pro version
+	JQ_updateCalculatedColumn: function (column) {
 		VM365_CalcMaster.setDOMelement('Updating Formula ' + column.Title + '...', 2);
 		column.list = "Lists(guid'" + _spPageContextInfo.pageListId.replace(/[{}]/g, '') + "')";
 		column.field = "Fields/getbytitle('" + column.Title + "')";
@@ -135,5 +175,6 @@ var VM365_CalcMaster = { //global obect for easier debugging
 			})
 		}); //ajax call
 	}
+	
 };
 VM365_CalcMaster.initialize();
