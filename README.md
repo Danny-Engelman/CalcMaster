@@ -2,6 +2,8 @@
 
 Activated on a SharePoint FldEdit.aspx page this code will attach itself to the Formula textarea.  
 
+One jQuery depency left
+
 #####features
 * On every keyup event it will (try to) save the Formula and provide immediate feedback.
 * Paste plain JavaScript code in an empty formula field and wrap in Formula strings with the action button
