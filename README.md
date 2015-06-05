@@ -13,6 +13,8 @@ it will not work if you have just created a new column, save it first*
 ###Version History
 * june 3 2015 - extracted primary code from my personal advanced Calcmaster
 * june 5 2015 - got rid of all jQuery dependencies
+
+
 ##Installation
 
 ###Save the Javascript file to your own server
