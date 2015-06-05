@@ -1,9 +1,11 @@
 # CalcMaster - Calculated Column Editor
 
 Activated on a SharePoint FldEdit.aspx page this code will attach itself to the Formula textarea.  
-On every keyup event it will (try to) save the Formula and provide immediate feedback.
 
-The OK button is no longer needed, because a correct Formula is always saved.
+#####features
+* On every keyup event it will (try to) save the Formula and provide immediate feedback.
+* Paste plain JavaScript code in an empty formula field and wrap in Formula strings with the action button
+* The OK button is no longer needed, because a correct Formula is always saved.
 
 *This code only works on existing Calculated Columns,  
 it will not work if you have just created a new column, save it first*
