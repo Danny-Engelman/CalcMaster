@@ -28,6 +28,8 @@ it will not work if you have just created a new column, save it first*
 
     javascript:(function(){var url='YOUR_URL_HERE',jsCode=document.createElement('script');jsCode.setAttribute('src', url);document.body.appendChild(jsCode);}())
     
+![](http://i.imgur.com/RPvRrDr.jpg)
+
 ###Trigger with Chrome Tampermonkey (auto activation)
 Tampermonkey can watch what you are doing in the browser and trigger code when you browse to FldEdit.aspx page
 
