@@ -11,9 +11,9 @@ Activated on a SharePoint FldEdit.aspx page this code will attach itself to the 
 it will not work if you have just created a new column, save it first*
 
 ###Version History
-* june 3 2015 - extracted primary code from my personal advanced Calcmaster
-* june 5 2015 - got rid of all jQuery dependencies
-
+* june  3 2015 - extracted primary code from my personal advanced Calcmaster
+* june  5 2015 - got rid of all jQuery dependencies
+* june 18 2015 - added console, added link to [SharePoint Calculated Column Functions Syntax List](http://viewmaster365.com/365coach/#/Calculated_Column_Functions_List)
 
 ##Installation
 
