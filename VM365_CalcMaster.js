@@ -138,12 +138,13 @@ var VM365_CalcMaster = { //global obect for easier debugging
 		VM365_CalcMaster.setDOMelement(calcmasterHint.join('<br>'), 3, 'calcmasterHint');
 	},
 	updateCalculatedColumn: function (column,formula,list,field) {
-		VM365_CalcMaster.setDOMelement('Trying to save Formula ' + column.Title + '....', 2);
+		VM365_CalcMaster.setDOMelement("Updating Formula " + column.Title + "... <span style='color:gray'>(this may take a minute)</span>", 2);
 		column.list = "Lists(guid'" + _spPageContextInfo.pageListId.replace(/[{}]/g, '') + "')";
 		column.field = "Fields/getbytitle('" + column.Title + "')";
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function () {
 			console.info(xmlhttp.status,xmlhttp);
+			VM365_CalcMaster.setDOMelement('Updating all List Items...');
 			if (xmlhttp.readyState == XMLHttpRequest.DONE) {
 				if (xmlhttp.status == 500) {
 					console.info(xmlhttp.status, xmlhttp.statusText,JSON.parse(xmlhttp.responseText).error.message.value);
@@ -179,7 +180,7 @@ var VM365_CalcMaster = { //global obect for easier debugging
 	},
 	//leaving jQuery ajax call in here, I use it my CalcMaster Pro version
 	JQ_updateCalculatedColumn: function (column) {
-		VM365_CalcMaster.setDOMelement('Updating Formula ' + column.Title + '... (this may take a minute)', 2);
+		VM365_CalcMaster.setDOMelement("Updating Formula " + column.Title + "... <span style='color:gray'>(this may take a minute)</span>", 2);
 		column.list = "Lists(guid'" + _spPageContextInfo.pageListId.replace(/[{}]/g, '') + "')";
 		column.field = "Fields/getbytitle('" + column.Title + "')";
 		$.ajax({
