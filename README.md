@@ -17,7 +17,12 @@ it will not work if you have just created a new column, save it first*
 * june 18 2015 - added console, added link to [SharePoint Calculated Column Functions Syntax List](http://viewmaster365.com/365coach/#/Calculated_Column_Functions_List)
 
 ##Installation
+Since this code executes within your browser I have not included the Bookmarklet. Built it your self so you understand the security implications:
 
+* Copy the code from [VM365_CalcMaster.js](https://raw.githubusercontent.com/Danny-Engelman/CalcMaster/master/VM365_CalcMaster.js)
+* Paste it at [the Bookmarkleter](http://chriszarate.github.io/bookmarkleter/) (*use default settings, no need to include jQuery*)
+
+##OR
 ###Save the Javascript file to your own server
 * Download the [VM365_CalcMaster.js](https://raw.githubusercontent.com/Danny-Engelman/CalcMaster/master/VM365_CalcMaster.js) script file to a Library within your SharePoint/Office365 environment
 * Copy the full URL to this file (e.g: //vm365.sharepoint.com/Pages/VM365_CalcMaster.js)
