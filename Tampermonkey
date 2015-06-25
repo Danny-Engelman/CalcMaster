@@ -12,7 +12,7 @@
 // ==/UserScript==
 waitForKeyElements ( '#onetidIODefTextValue1' , function(){
     //attach bookmarklet code to page and trigger execute
-    var VM365_CalcMasterDirectory='https://365csi.sharepoint.com/sites/VM/SitePages/CalcMaster/';
+    var VM365_CalcMasterDirectory='[YOUR PATH HERE]';
 
     var jsCode = document.createElement('script'); 
     jsCode.setAttribute('src', VM365_CalcMasterDirectory + 'VM365_CalcMaster.js'  );
