@@ -33,7 +33,7 @@
 	}
 })();
 
-if (typeof _spPageContextInfo !== undefined) {
+if ( !document.getElementById('onetidIODefTextValue1') ) {
 	alert('Run the CalcMaster on a SharePoint page editing an existing Calculated Column Formula');
 }
 /* Global functions */
