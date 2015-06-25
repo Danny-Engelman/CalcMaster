@@ -1,5 +1,5 @@
 /*global _spPageContextInfo */
-/*global document,console,clearTimeout,setTimeout,window,XMLHttpRequest,$ */
+/*global document,alert,console,clearTimeout,setTimeout,window,XMLHttpRequest,$ */
 /*jshint -W043*/
 
 /**
@@ -33,6 +33,9 @@
 	}
 })();
 
+if (typeof _spPageContextInfo !== undefined) {
+	alert('Run the CalcMaster on a SharePoint page editing an existing Calculated Column Formula');
+}
 /* Global functions */
 var VM365_CalcMaster = { //global obect for easier debugging
 	//global settings
@@ -50,21 +53,21 @@ var VM365_CalcMaster = { //global obect for easier debugging
 		//Highlight the Number datatype for HTML output
 		VM365_CalcMaster.setDOMelement('Number (outputs HTML/JavaScript)', 0, 'L_onetidTypeNumber1', 'lightGreen');
 		//add CalcMaster UI elements for Toolbar and Save Formula Reporting, remember the MIT license
-		VM365_CalcMaster.setDOMelement(
-			"<span style='font-size:1.3em;'>CalcMaster</span> \
-			powered by <a target=_new href=http://365coach.nl>365Coach.nl</a> \
-			<br>MIT sourcecode on <a target=_new href=https://github.com/Danny-Engelman/CalcMaster>GitHub</a> \
-			<br>\
-			<br>See <a href='http://viewmaster365.com/365coach/#/Calculated_Column_Functions_List' target=_new>SharePoint Calculated Column Functions & Syntax List</a>\
-			<br>The \
-				<a href='http://viewmaster365.com/365coach/#/Drag_Drop_Columns_in_the_EditView_Page'> \
-					Drag-Drop View Editor</a> is a cool bookmarklet also\
-			<div style='min-height:55px;max-width:500px;'>\
-				<img src='/" + VM365_CalcMaster.layouts + "/images/WSC16.GIF' \
-					title='Wrap Javascript code in SharePoint Formula quoted string' \
-					onclick='VM365_CalcMaster.functionConvertToICC()'> \
-				<div id='calcmasterSave'></div><div id='calcmasterHint'></div> \
-			</div>", 0, 'onetidIODefText0');
+		var H = "<span style='font-size:1.3em;'>CalcMaster</span>";
+		H += "powered by <a target=_new href=http://365coach.nl>365Coach.nl</a>";
+		H += "<br>MIT sourcecode on <a target=_new href=https://github.com/Danny-Engelman/CalcMaster>GitHub</a>";
+		H += "<br><br>See <a href='http://viewmaster365.com/365coach/#/Calculated_Column_Functions_List'";
+		H += "target=_new>SharePoint Calculated Column Functions & Syntax List</a>";
+		H += "<br>The";
+		H += "<a href='http://viewmaster365.com/365coach/#/Drag_Drop_Columns_in_the_EditView_Page'>";
+		H += "Drag-Drop View Editor</a> is a cool bookmarklet also";
+		H += "<div style='min-height:55px;max-width:500px;'>";
+		H += "<img src='/" + VM365_CalcMaster.layouts + "/images/WSC16.GIF'";
+		H += "title='Wrap Javascript code in SharePoint Formula quoted string'";
+		H += "onclick='VM365_CalcMaster.functionConvertToICC()'>";
+		H += "<div id='calcmasterSave'></div><div id='calcmasterHint'></div>";
+		H += "</div>";
+		VM365_CalcMaster.setDOMelement(H, 0, 'onetidIODefText0');
 		VM365_CalcMaster.addFunctionlist();
 		VM365_CalcMaster.setDOMelement('Update your Formula and I will check if the Formula is correct', 2);
 		//add event to the existing textarea
@@ -73,7 +76,7 @@ var VM365_CalcMaster = { //global obect for easier debugging
 				clearTimeout(VM365_CalcMaster.saveID);
 				VM365_CalcMaster.saveID = setTimeout(function () {
 					VM365_CalcMaster.updateFormula(event);
-				}, 300);//do not save while typing
+				}, 300); //do not save while typing
 			}
 		};
 	},
@@ -137,24 +140,24 @@ var VM365_CalcMaster = { //global obect for easier debugging
 		if (Formula.split('(').length !== Formula.split(')').length) calcmasterHint.push("unmatched () brackets");
 		VM365_CalcMaster.setDOMelement(calcmasterHint.join('<br>'), 3, 'calcmasterHint');
 	},
-	updateCalculatedColumn: function (column,formula,list,field) {
+	updateCalculatedColumn: function (column, formula, list, field) {
 		VM365_CalcMaster.setDOMelement("Updating Formula " + column.Title + "... <span style='color:gray'>(this may take a minute)</span>", 2);
 		column.list = "Lists(guid'" + _spPageContextInfo.pageListId.replace(/[{}]/g, '') + "')";
 		column.field = "Fields/getbytitle('" + column.Title + "')";
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function () {
-			console.info(xmlhttp.status,xmlhttp);
+			console.info(xmlhttp.status, xmlhttp);
 			VM365_CalcMaster.setDOMelement('Updating all List Items...');
 			if (xmlhttp.readyState == XMLHttpRequest.DONE) {
 				if (xmlhttp.status == 500) {
-					console.info(xmlhttp.status, xmlhttp.statusText,JSON.parse(xmlhttp.responseText).error.message.value);
+					console.info(xmlhttp.status, xmlhttp.statusText, JSON.parse(xmlhttp.responseText).error.message.value);
 					VM365_CalcMaster.setDOMelement(JSON.parse(xmlhttp.responseText).error.message.value, 1);
 				} else {
 					VM365_CalcMaster.setDOMelement('Formula ' + column.Title + ' saved!');
 				}
 			}
 		};
-		console.info('saving',column.Title,column.Formula);
+		console.info('saving', column.Title, column.Formula);
 		xmlhttp.open("POST", _spPageContextInfo.webAbsoluteUrl + "/_api/Web/ " + column.list + "/" + column.field, true);
 		xmlhttp.setRequestHeader("X-HTTP-Method", "MERGE");
 		xmlhttp.setRequestHeader("X-RequestDigest", document.getElementById('__REQUESTDIGEST').value);
@@ -215,11 +218,11 @@ var VM365_CalcMaster = { //global obect for easier debugging
 			})
 		}); //ajax call
 	},
-	addFunctionlist:function(){
-		var F=document.getElementById('onetidIODefText0').parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.cells[1];
-		F.style.verticalAlign='top';
-		F.style.width='inherit';
-		F.innerHTML="";
+	addFunctionlist: function () {
+		var F = document.getElementById('onetidIODefText0').parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.cells[1];
+		F.style.verticalAlign = 'top';
+		F.style.width = 'inherit';
+		F.innerHTML = "";
 	}
 };
 VM365_CalcMaster.initialize();
