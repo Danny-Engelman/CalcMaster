@@ -4,7 +4,8 @@ Activated on a SharePoint FldEdit.aspx page this code will attach itself to the 
 
 #####features
 * On every keyup event it will (try to) save the Formula and provide immediate feedback.
-* Paste plain JavaScript code in an empty formula field and wrap in Formula strings with the action button
+* Paste plain JavaScript code in an empty formula field and wrap in Formula strings with the action button.  
+*Why I added this?* See [www.viewmaster365.com/#/How](http://www.viewmaster365.com/#/How)
 * The OK button is no longer needed, because a correct Formula is always saved.
 
 *This code only works on existing Calculated Columns,  
