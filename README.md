@@ -2,7 +2,7 @@
 
 Activated on a SharePoint FldEdit.aspx page this code will attach itself to the Formula textarea.  
 
-#####features
+##### features
 * On every keyup event it will (try to) save the Formula and provide immediate feedback.
 * Paste plain JavaScript code in an empty formula field and wrap in Formula strings with the action button.  
 *Why I added this?* See [www.viewmaster365.com/#/How](http://www.viewmaster365.com/#/How)
@@ -10,6 +10,9 @@ Activated on a SharePoint FldEdit.aspx page this code will attach itself to the 
 
 *This code only works on existing Calculated Columns,  
 it will not work if you have just created a new column, save it first*
+
+![](http://i.imgur.com/RPvRrDr.jpg)
+
 
 ###Version History
 * june  3 2015 - extracted primary code from my personal advanced Calcmaster
@@ -34,8 +37,6 @@ Since this code executes within your browser I have not included the Bookmarklet
 
     javascript:(function(){var url='YOUR_URL_HERE',jsCode=document.createElement('script');jsCode.setAttribute('src', url);document.body.appendChild(jsCode);}())
     
-![](http://i.imgur.com/RPvRrDr.jpg)
-
 ###Trigger with Chrome Tampermonkey (auto activation)
 Tampermonkey can watch what you are doing in the browser and trigger code when you browse to FldEdit.aspx page
 
