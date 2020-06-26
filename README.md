@@ -17,7 +17,7 @@ it will not work if you have just created a new column, save it first*
 ### Version History
 * june  3 2015 - extracted primary code from my personal advanced Calcmaster
 * june  5 2015 - got rid of all jQuery dependencies
-* june 18 2015 - added console, added link to [SharePoint Calculated Column Functions Syntax List](http://viewmaster365.com/365coach/#/Calculated_Column_Functions_List)
+* june 18 2015 - added console, added link to [SharePoint Calculated Column Functions Syntax List](https://www.365csi.nl/vm365com/365coach/#/Calculated_Column_Functions_List)
 
 ## Installation
 Since this code executes within your browser I have not included the Bookmarklet. Built it your self so you understand the security implications:
